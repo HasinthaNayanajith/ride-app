@@ -13,7 +13,7 @@
             <div class="card mt-3">
                 <div class="card-body p-4">
                     <div class="text-center">
-                        <h5 class="card-title fw-bolder font-playfair text-dark" style="font-size: 48px;">Signup for free</h5>
+                        <h5 class="card-title fw-bolder font-playfair text-dark" style="font-size: 30px;">Signup for free</h5>
                     </div>
                     <hr>
                     <div class="my-3">
