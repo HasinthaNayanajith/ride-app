@@ -8,4 +8,9 @@ class AuthController extends BaseController
     {
         return view('pages/dashboard');
     }
+    
+    public function signUp(): string
+    {
+        return view('pages/signup');
+    }
 }
