@@ -21,6 +21,12 @@ $routes->group('review', static function ($routes) {
     $routes->get('create', 'ReviewController::create');
 });
 
+$routes->group('ride', static function ($routes) {
+    // route = base_url/ride
+    $routes->get('/', 'RideController::index');
+    $routes->get('available', 'RideController::available');
+});
+
 $routes->group('payment', static function ($routes) {
     // route = base_url/payment
     $routes->get('/', 'PaymentController::index');
