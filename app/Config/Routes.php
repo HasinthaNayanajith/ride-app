@@ -5,9 +5,11 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
+
+$routes->get('/', 'HomeController::index');
 $routes->group('auth', static function ($routes) {
     // route = base_url/auth
-    $routes->get('/', 'AuthController::signIn');
+    $routes->get('signin', 'AuthController::signIn');
     $routes->get('signup', 'AuthController::signUp');
 });
 $routes->group('review', static function ($routes) {

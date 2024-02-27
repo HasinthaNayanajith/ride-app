@@ -6,7 +6,7 @@ class AuthController extends BaseController
 {
     public function signIn(): string
     {
-        return view('pages/dashboard');
+        return view('pages/signin');
     }
     
     public function signUp(): string
