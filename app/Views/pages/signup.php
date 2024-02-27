@@ -18,15 +18,19 @@
                         <hr>
                         <div class="my-3">
                             <div class="mb-3">
-                                <label for="exampleFormControlInput1" class="form-label">Email address / Phone Number</label>
-                                <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="">
+                                <label for="exampleFormControlInput1" class="form-label">Username</label>
+                                <input type="text" class="form-control" id="username" name="username" placeholder="">
                             </div>
                             <div class="mb-3">
-                                <label for="exampleFormControlInput1" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="exampleFormControlInput1">
+                                <label for="exampleFormControlInput2" class="form-label">Email address</label>
+                                <input type="email" class="form-control" id="email" name="email" placeholder="">
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleFormControlInput3" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="password" name="password">
                             </div>
                         </div>
-                        <button class="btn btn-primary w-100 mt-3">Sign Me In</button>
+                        <button class="btn btn-primary w-100 mt-3">Signup</button>
                     </div>
                 </div>
             </div>

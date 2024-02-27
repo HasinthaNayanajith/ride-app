@@ -8,7 +8,7 @@ use CodeIgniter\Router\RouteCollection;
 $routes->group('auth', static function ($routes) {
     // route = base_url/auth
     $routes->get('/', 'AuthController::signIn');
-    $routes->get('/signup', 'AuthController::signUp');
+    $routes->get('signup', 'AuthController::signUp');
 });
 $routes->group('review', static function ($routes) {
     // route = base_url/review
