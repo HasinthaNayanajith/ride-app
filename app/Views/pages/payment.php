@@ -76,8 +76,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-5 col-sm-12">
-                <img src="/images/payment.jpg" alt="Payment Img" width="60%" class="ms-5 ps-5">
+            <div class=" col-md-8 col-sm-12 d-flex justify-content-center">
+                <img src="/images/pay.png" alt="Payment Img" width="40%" class="ms-5 ps-5">
             </div>
         </div>
     </div>
