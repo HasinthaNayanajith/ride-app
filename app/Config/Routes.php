@@ -14,6 +14,7 @@ $routes->group('auth', static function ($routes) {
     $routes->get('signup', 'AuthController::signUp');
     $routes->post('register', 'AuthController::register');
     $routes->post('login', 'AuthController::login');
+    $routes->get('logout', 'AuthController::logout');
 });
 
 $routes->group('review', static function ($routes) {

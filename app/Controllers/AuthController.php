@@ -111,12 +111,10 @@ class AuthController extends BaseController
         return $this->response->setJSON(['success' => true, 'message' => 'Login successful']);
     }
 
-
     public function logout()
     {
         $session = session();
         $session->destroy();
-
-        return redirect()->to('login');
+        return $this->response->setJSON(['success' => true, 'message' => 'Login successful']);
     }
 }
