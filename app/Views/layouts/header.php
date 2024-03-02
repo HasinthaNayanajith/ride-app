@@ -8,12 +8,13 @@
 
     <!-- css -->
     <link rel="stylesheet" href="<?= base_url(); ?>css/bootstrap.min.css">
-    <link rel="stylesheet" href="<?= base_url(); ?>css/bootstrap.icons.css">
+    <link rel="stylesheet" href="<?= base_url(); ?>css/bootstrap-icons.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <link rel="stylesheet" href="<?= base_url(); ?>css/tabs.css">
     <link rel="stylesheet" href="<?= base_url() ?>css/main.css">
 
-    <!-- js -->
-    <script defer src="<?= base_url(); ?>js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <!-- <script type="module" src="<?= base_url() ?>js/map.js"></script> -->
 
 </head>
 
