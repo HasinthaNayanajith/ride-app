@@ -12,6 +12,13 @@ $routes->group('auth', static function ($routes) {
     // route = base_url/auth
     $routes->get('signin', 'AuthController::signIn');
     $routes->get('signup', 'AuthController::signUp');
+    $routes->post('register', 'AuthController::register');
+    $routes->post('login', 'AuthController::login');
+    $routes->get('logout', 'AuthController::logout');
+    $routes->get('profile', 'AuthController::profile');
+    $routes->post('update_profile', 'AuthController::update_profile');
+    $routes->post('register_vehicle', 'AuthController::register_vehicle');
+    $routes->post('update_vehicle', 'AuthController::update_vehicle');
 });
 
 $routes->group('review', static function ($routes) {
@@ -30,6 +37,5 @@ $routes->group('ride', static function ($routes) {
 $routes->group('payment', static function ($routes) {
     // route = base_url/payment
     $routes->get('/', 'PaymentController::index');
-    // route = base_url/review/create
-    // $routes->get('create', 'ReviewController::create');
+    $routes->post('create', 'PaymentController::create');
 });
