@@ -75,10 +75,10 @@
                             
                         </div>
                         <form action="javascript:void(0)" id="payment_form">
-                            <input type="text" class="form-control" name="ride_id" id="ride_id" placeholder="ride id" hidden>
-                            <input type="text" class="form-control" name="driver_id" id="driver_id" placeholder="driver id" hidden>
-                            <input type="number" class="form-control" name="distance" id="distance" placeholder="passenger id" hidden>
-                            <input type="number" class="form-control fs-3" name="amount" id="amount" placeholder="amount" hidden>
+                            <input type="text" class="form-control" name="ride_id" id="ride_id" placeholder="ride id" value="5" hidden>
+                            <input type="text" class="form-control" name="driver_id" id="driver_id" placeholder="driver id" value="3" hidden>
+                            <input type="number" class="form-control" name="distance" id="distance" placeholder="passenger id" value="3" hidden>
+                            <input type="number" class="form-control fs-3" name="amount" id="amount" placeholder="amount" value="467" hidden>
                             <button type="submit" id="btn_payment" class="btn btn-primary mt-4 w-100 py-2">Confirm Payment</button>
                         </form>
                     </div>
@@ -113,7 +113,7 @@
                                 text: response.message
                             }).then((result) => {
                                 if (result.isConfirmed || result.isDismissed) {
-                                    window.location.href = '<?php echo base_url(); ?>review/create';
+                                    window.location.href = '<?php echo base_url(); ?>review?ride=' + response.ride_id;
                                 }
                             });
                         } else {
