@@ -80,14 +80,6 @@
                                     <input type="hidden" id="drop_long">
                                 </div>
                             </div>
-                            <div class="alert alert-secondary" role="alert">
-                                <div class="d-flex flex-column">
-                                    <span class="fw-bold text-dark">Distance</span>
-                                    <span id="distance">---</span>
-                                    <span class="fw-bold text-dark mt-3">Average Price</span>
-                                    <span id="price">---</span>
-                                </div>
-                            </div>
                             <div id="map" class="rounded" style="height: 400px; width: 100%;"></div>
                             <div class="float-end">
                                 <button class="btn btn-primary mt-3 srch">See Available Drivers & Prices</button>
@@ -254,7 +246,7 @@
         // }
     </script>
     <script>
-        function getAddressFromLatLng(lat, lng, elementId) {
+        function getAddressFromLatLng(lat, lng) {
             const geocoder = new google.maps.Geocoder();
 
             const latlng = {
@@ -270,7 +262,10 @@
                         const address = results[0].formatted_address;
                         console.log("Address:", address);
 
-                        document.getElementById(elementId).value = address;
+                        document.getElementById('pick_location').value = address;
+                        document.getElementById('pick_lat').value = lat;
+                        document.getElementById('pick_long').value = lng;
+
                         // You can use the obtained address in your application as needed
                     } else {
                         console.error("No results found");
@@ -281,80 +276,10 @@
             });
         }
 
-        function calculateDistanceAndRoute(pickupLat, pickupLng, dropoffLat, dropoffLng) {
-            const origin = new google.maps.LatLng(pickupLat, pickupLng);
-            const destination = new google.maps.LatLng(dropoffLat, dropoffLng);
-            const directionsService = new google.maps.DirectionsService();
-            const directionsRenderer = new google.maps.DirectionsRenderer();
-
-            const mapProp = {
-                center: origin,
-                zoom: 14,
-            };
-            const map = new google.maps.Map(document.getElementById("map"), mapProp);
-            directionsRenderer.setMap(map);
-
-            const request = {
-                origin: origin,
-                destination: destination,
-                travelMode: google.maps.TravelMode.DRIVING
-            };
-
-            directionsService.route(request, (response, status) => {
-                if (status === 'OK') {
-                    directionsRenderer.setDirections(response);
-
-                    // Display the distance
-                    const distance = response.routes[0].legs[0].distance.text;
-                    console.log('Distance:', distance);
-                    // distance is like 36.5 KM
-                    // check if distance greater than 0
-                    if (parseFloat(distance.split(' ')[0]) > 0) {
-                        // calculate the price
-                        document.getElementById('distance').innerText = distance;
-                        // calculate price;
-                        // LKR 100 for each in first 5 KMs
-                        // LKR 80 for each in next 5 KMs
-                        // LKR 60 for each KM after that
-                        let price = 0;
-                        const distanceInKMs = parseFloat(distance.split(' ')[0]);
-                        if (distanceInKMs <= 5) {
-                            price = distanceInKMs * 100;
-                        } else if (distanceInKMs <= 10) {
-                            price = (5 * 100) + ((distanceInKMs - 5) * 80);
-                        } else {
-                            price = (5 * 100) + (5 * 80) + ((distanceInKMs - 10) * 60);
-                        }
-                        document.getElementById('price').innerText = 'LKR ' + price.toFixed(2) + ' + Service Charge';
-                    }
-                    else{
-                        document.getElementById('distance').innerText = '---';
-                        document.getElementById('price').innerText = '---';
-                    }
-
-                    // Display the route on the map
-                    const route = response.routes[0].overview_path;
-                    const polyline = new google.maps.Polyline({
-                        path: route,
-                        geodesic: true,
-                        strokeColor: '#FF0000',
-                        strokeOpacity: 1.0,
-                        strokeWeight: 2
-                    });
-                    polyline.setMap(map);
-
-                    // Display the distance on your page as needed
-                    // document.getElementById('distance').innerText = distance;
-                } else {
-                    console.error('Error:', status);
-                }
-            });
-        }
-
         async function myMap() {
+
             document.getElementById('loading_spin').style.display = 'block';
             document.getElementById('map_div').style.display = 'none';
-
             // Try to get the user's current location
             navigator.geolocation.getCurrentPosition(
                 (position) => {
@@ -364,7 +289,7 @@
                         lng: position.coords.longitude,
                     };
 
-                    getAddressFromLatLng(userPosition.lat, userPosition.lng, 'pick_location');
+                    getAddressFromLatLng(userPosition.lat, userPosition.lng);
                     console.log("User's location: ", userPosition);
 
                     var mapProp = {
@@ -381,10 +306,14 @@
                     document.getElementById('map_div').style.display = 'block';
                 },
                 () => {
+
                     document.getElementById('loading_spin').style.display = 'none';
                     document.getElementById('map_div').style.display = 'block';
                     // Handle errors or default to a specific location
-                    console.error("Error getting user location. Defaulting to Kurunegala, Sri Lanka.");
+                    console.error(
+                        "Error getting user location. Defaulting to Kurunegala, Sri Lanka."
+                    );
+
                     // The location of Kurunegala, Sri Lanka
                     const defaultPosition = {
                         lat: 7.4712,
@@ -409,13 +338,6 @@
                 var place = autocomplete.getPlace();
                 document.getElementById('drop_lat').value = place.geometry.location.lat();
                 document.getElementById('drop_long').value = place.geometry.location.lng();
-
-                const pickupLat = parseFloat(document.getElementById('pick_lat').value);
-                const pickupLng = parseFloat(document.getElementById('pick_long').value);
-                const dropoffLat = parseFloat(place.geometry.location.lat());
-                const dropoffLng = parseFloat(place.geometry.location.lng());
-
-                calculateDistanceAndRoute(pickupLat, pickupLng, dropoffLat, dropoffLng);
             });
 
             var input2 = document.getElementById('pick_location');
@@ -426,6 +348,11 @@
                 document.getElementById('pick_long').value = place2.geometry.location.lng();
             });
         }
+
+        // locate me button click
+        document.getElementById('locate-me').addEventListener('click', function() {
+            myMap();
+        });
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAF6DmICYAwskmjHJVMC_2LzCSnsgnogwg&loading=async&libraries=places&callback=myMap"></script>
 </body>
