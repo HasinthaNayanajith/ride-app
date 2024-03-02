@@ -13,25 +13,25 @@
                         <div class="my-3">
                             <div class="mb-3">
                                 <label for="name" class="form-label">Full Name</label>
-                                <input type="text" class="form-control" id="name" name="name" placeholder="">
+                                <input type="text" class="form-control" id="name" name="name" placeholder="" required>
                             </div>
                             <div class="mb-3">
                                 <label for="address" class="form-label">Address</label>
-                                <input type="text" class="form-control" id="address" name="address" placeholder="">
+                                <input type="text" class="form-control" id="address" name="address" placeholder="" required>
                             </div>
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="email" class="form-label">Email address</label>
-                                    <input type="text" class="form-control" id="email" name="email" placeholder="">
+                                    <input type="text" class="form-control" id="email" name="email" placeholder="" required>
                                 </div>
                                 <div class="col-md-6">
                                     <label for="phone" class="form-label">Phone Number</label>
-                                    <input type="text" class="form-control" id="phone" name="phone" placeholder="">
+                                    <input type="text" class="form-control" id="phone" name="phone" placeholder="" required>
                                 </div>
                             </div>
                             <div class="mb-3">
                                 <label for="nic" class="form-label">NIC</label>
-                                <input type="text" class="form-control" id="nic" name="nic">
+                                <input type="text" class="form-control" id="nic" name="nic" required>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">

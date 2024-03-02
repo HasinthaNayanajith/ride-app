@@ -12,19 +12,19 @@
             <div class="card mt-3">
                 <div class="card-body p-4">
                     <div class="text-center">
-                        <h5 class="card-title fw-bolder font-playfair text-dark" style="font-size: 48px;">Sign In</h5>
-                        <p class="card-text">First thing is first. Please log into continue.</p>
+                        <h5 class="card-title fw-bolder font-playfair text-dark" style="font-size: 35px;">Sign In</h5>
+                        <p class="card-text fs-6">First thing is first. Please log into continue.</p>
                     </div>
                     <hr>
                     <form action="javascript:void(0)" id="signinForm">
                         <div class="my-3">
                             <div class="mb-3">
                                 <label for="exampleFormControlInput1" class="form-label">Email address</label>
-                                <input type="text" class="form-control" id="email" name="email" placeholder="">
+                                <input type="text" class="form-control" id="email" name="email" placeholder="" required>
                             </div>
                             <div class="mb-3">
                                 <label for="exampleFormControlInput1" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="password" name="password">
+                                <input type="password" class="form-control" id="password" name="password" required>
                             </div>
                         </div>
                         <button class="btn btn-primary w-100 mt-3" id="btn_signin">Sign Me In</button>
