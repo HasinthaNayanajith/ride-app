@@ -21,7 +21,7 @@
                         <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
                             <img src="/images/user.jpg" alt="Profile" class="rounded-circle" height="100px" width="100px">
                             <h2><?php echo $user['name']; ?></h2>
-                            <h5><?php echo $user['is_driver'] = 1 ? 'Driver' : 'Passenger'; ?></h5>
+                            <h5><?php echo $user['is_driver'] == 1 ? 'Driver' : 'Passenger'; ?></h5>
                             <div class="social-links mt-2">
                                 <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
                                 <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>

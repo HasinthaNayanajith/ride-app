@@ -67,17 +67,15 @@
                                 <?php endif; ?>
                             </h4>
                             <p class="fs-5 mb-4">Thank you for choosing our ride service. You have arrived at your destination.</p>
-                            <p class="fs-6">Please confirm your payment to complete your journey.</p>
-                            <h4 class="mt-4">Total Distance</h4>
-                            <h5>3.7Km</h5>
-                            <h2 class="mt-4">Total Amount</h2>
-                            <h4>LKR 617.98</h4>
+                            <p class="fs-6">Please confirm your payment to complete your ride.</p>
+                            <h6 class="mt-4">Total Distance</h6>
+                            <h3 class="fw-bolder"><?php echo $ride['distance']; ?></h3>
+                            <h6 class="mt-4">Total Amount</h6>
+                            <h3 class="fw-bolder"><?php echo 'LKR ' . $ride['price'] . '.00'; ?></h3>
                         </div>
                         <form action="javascript:void(0)" id="payment_form">
-                            <input type="text" class="form-control" name="ride_id" id="ride_id" placeholder="ride id" hidden>
-                            <input type="text" class="form-control" name="driver_id" id="driver_id" placeholder="driver id" hidden>
-                            <input type="number" class="form-control" name="distance" id="distance" placeholder="passenger id" hidden>
-                            <input type="number" class="form-control fs-3" name="amount" id="amount" placeholder="amount" hidden>
+                            <input type="text" class="form-control" name="booking_id" id="booking_id" value="<?php echo $booking['id']; ?>" placeholder="ride id" hidden>
+                            <input type="number" class="form-control fs-3" name="amount" id="amount" value="<?php echo $ride['price']; ?>" placeholder="amount" hidden>
                             <button type="submit" id="btn_payment" class="btn btn-primary mt-4 w-100 py-2">Confirm Payment</button>
                         </form>
                     </div>
@@ -112,7 +110,7 @@
                                 text: response.message
                             }).then((result) => {
                                 if (result.isConfirmed || result.isDismissed) {
-                                    window.location.href = '<?php echo base_url(); ?>review?ride=' + response.ride_id;
+                                  window.location.href = '<?php echo base_url(); ?>review?ride=' + response.ride_id;
                                 }
                             });
                         } else {

@@ -193,9 +193,9 @@
     <div class="p-5">
         <div class="row">
             <div class="text-center my-4">
-                <h5 class="card-title fw-bolder font-playfair text-dark" style="font-size: 64px;">Choose a Driver
+                <h5 class="card-title fw-bolder font-playfair text-dark" style="font-size: 64px;">Your Ride
                 </h5>
-                <p class="card-text mt-3">Currently available drivers.</p>
+                <p class="card-text mt-3">View your ride details.</p>
             </div>
             <div class="col-md-10 offset-md-1 col-sm-12">
                 <div class="my-3">
@@ -206,7 +206,7 @@
                                 <div class="md-step-circle"><span>From</span></div>
                                 <div class="md-step-title text-light">
                                     <p>
-                                        <?php echo $pickup_location; ?>
+                                        <?php echo $ride['pickup_location']; ?>
                                     </p>
                                 </div>
                                 <div class="md-step-bar-left"></div>
@@ -216,7 +216,7 @@
                                 <div class="md-step-circle"><span>To</span></div>
                                 <div class="md-step-title text-light">
                                     <p>
-                                        <?php echo $drop_location; ?>
+                                        <?php echo $ride['dropoff_location']; ?>
                                     </p>
                                 </div>
                                 <div class="md-step-bar-left"></div>
@@ -224,54 +224,16 @@
                             </div>
                         </div>
                         <div class="mt-3 py-4 d-flex flex-column text-center">
-                            <h1 class="fw-bolder text-light" style="font-size: 72px; font-weight: 900;"><?php echo $distance; ?></h1>
-                            <h4 style="color: orange;"><?php echo 'LKR ' . $price . '.00'; ?></h4>
+                            <h1 class="fw-bolder text-light" style="font-size: 72px; font-weight: 900;"><?php echo $ride['distance']; ?></h1>
+                            <h4 style="color: orange;"><?php echo 'LKR ' . $ride['price'] . '.00'; ?></h4>
+                            <span class="my-4">Driver & Vehicle Details</span>
+                            <h5 class="fw-bolder text-light"><?php echo 'Name : ' . $driver['name']; ?></h5>
+                            <h5 class="fw-bolder text-light"><?php echo 'Mobile : ' . $driver['phone']; ?></h5>
+                            <h5 class="fw-bolder text-light"><?php echo 'Vehicle : ' . $vehicle['vehicle_model']; ?></h5>
+                            <div class="w-100 d-flex justify-content-center">
+                                <a href="/payment?bookingId=<?php echo $booking['id']; ?>" class="btn btn-success my-5 p-4" style="width: fit-content;">Make Payment & Complete Ride</a>
+                            </div>
                         </div>
-                    </div>
-                    <div class="mb-3">
-                        <?php $x = 0;
-                        foreach ($drivers as $driver) {
-                            $x++; ?>
-                            <div class="card mb-3">
-                                <div class="card-body">
-                                    <div class="d-flex">
-                                        <div class="row">
-                                            <div class="col-3 d-flex justify-content-center align-items-center">
-                                                <img src="/images/taxi.png" alt="Rating Img" width="100%" class="">
-                                            </div>
-                                            <div class="col-9">
-                                                <h5 class="card-title text-dark fw-bold"><?php echo $driver['name']; ?></h5>
-                                                <div class="d-flex flex-column w-100">
-                                                    <span>Mobile Number : <strong><?php echo $driver['phone']; ?></strong></span>
-                                                    <div class="col-md-12">
-                                                        <div class="col-md-6">
-                                                            <span>Vehicle Model : <strong><?php echo $driver['vehicle_model']; ?></strong></span>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <span>Vehicle Color : <strong><?php echo $driver['vehicle_color']; ?></strong></span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-12">
-                                                        <div class="col-md-6">
-                                                            <span>Vehicle Plate No : <strong><?php echo $driver['license_plate']; ?></strong></span>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <span>Insured By : <strong><?php echo $driver['insurance_company']; ?></strong></span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <button class="btn btn-dark book_btn mt-3" data-vehicle-id="<?php echo $driver['vehicle_id']; ?>" data-driver-id="<?php echo $driver['id']; ?>">Book Taxi</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        <?php } ?>
-                        <?php if ($x == 0) { ?>
-                            <div class="alert alert-danger my-3" role="alert">
-                                No taxis found for the given locations. Please try again later.
-                            </div>
-                        <?php } ?>
                     </div>
                 </div>
             </div>
@@ -279,55 +241,7 @@
     </div>
     <?php echo view('layouts/footer'); ?>
     <script>
-        $(document).ready(function() {
-            $('.book_btn').click(function() {
-                var driver_id = $(this).data('driver-id');
-                var vehicle_id = $(this).data('vehicle-id');
-                var pickup_location = "<?php echo $pickup_location; ?>";
-                var drop_location = "<?php echo $drop_location; ?>";
-                var pickup_latitude = "<?php echo $pickup_latitude; ?>";
-                var pickup_longitude = "<?php echo $pickup_longitude; ?>";
-                var drop_latitude = "<?php echo $drop_latitude; ?>";
-                var drop_longitude = "<?php echo $drop_longitude; ?>";
-                var distance = "<?php echo $distance; ?>";
-                var price = "<?php echo $price; ?>";
-                $.ajax({
-                    url: '/ride/book',
-                    type: 'post',
-                    data: {
-                        driver_id: driver_id,
-                        vehicle_id: vehicle_id,
-                        pickup_location: pickup_location,
-                        drop_location: drop_location,
-                        pickup_latitude: pickup_latitude,
-                        pickup_longitude: pickup_longitude,
-                        drop_latitude: drop_latitude,
-                        drop_longitude: drop_longitude,
-                        distance: distance,
-                        price: price
-                    },
-                    success: function(data) {
-                        if (data.success) {
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Ride Booked',
-                                text: 'Your ride has been booked. The driver will contact you shortly.',
-                            }).then((result) => {
-                                if (result.isConfirmed) {
-                                    window.location.href = '/ride/view?bookingId=' + data.booking_id;
-                                }
-                            });
-                        } else {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Oops...',
-                                text: data.message ? data.message : 'An error occurred while processing your request. Please try again later.',
-                            });
-                        }
-                    }
-                });
-            });
-        });
+        $(document).ready(function() {});
     </script>
 </body>
 

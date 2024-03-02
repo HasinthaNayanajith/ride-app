@@ -7,7 +7,6 @@
     font-family: 'Inter', sans-serif;
     font-weight: 500;
     font-size: 14px;
-    color: #6b7280;
 }
 
 body {
@@ -19,7 +18,7 @@ body {
 }
 
 .font-playfair{
-    font-family: 'Playfair Display', serif;
+    /* font-family: 'Playfair Display', serif; */
     font-weight: 900;
 }
 
@@ -41,4 +40,8 @@ body {
     border-radius: 10px;
     border: none;
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+}
+
+.card-text{
+    font-size: 18px;
 }
