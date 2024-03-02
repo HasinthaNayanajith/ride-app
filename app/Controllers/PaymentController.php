@@ -36,7 +36,7 @@ class PaymentController extends BaseController
         if ($paymentModel->insert($paymentData)) {
             // update booking status
             $bookingModel = new \App\Models\BookingsModel();
-            $bookingModel->update($paymentData['ride_id'], ['status' => 1, 'completed_at' => date('Y-m-d H:i:s')]);
+            $bookingModel->update($paymentData['ride_id'], ['status' => 1, 'completed_at' => date('Y-m-d H:i:s'), 'ride_id' => $this->request->getVar('booking_id')]);
             return $this->response->setJSON(['success' => true, 'message' => 'Payment completed successfully.']);
         } else {
             return $this->response->setJSON(['success' => false, 'message' => 'Failed to create payment.']);

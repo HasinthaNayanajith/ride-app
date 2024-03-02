@@ -37,6 +37,24 @@ class AuthController extends BaseController
 
     public function register()
     {
+        $userModel = new UserModel();
+
+        $email = $this->request->getPost('email');
+        $phone = $this->request->getPost('phone');
+        $nic = $this->request->getPost('nic');
+
+        if (!empty($email) && $userModel->where('email', $email)->first()) {
+            return $this->response->setJSON(['success' => false, 'message' => 'Email exists! Please try again.']);
+        }
+
+        if (!empty($phone) && $userModel->where('phone', $phone)->first()) {
+            return $this->response->setJSON(['success' => false, 'message' => 'Phone number exists! Please try again.']);
+        }
+
+        if (!empty($nic) && $userModel->where('nic', $nic)->first()) {
+            return $this->response->setJSON(['success' => false, 'message' => 'NIC exists! Please try again.']);
+        }
+
         $password = $this->generateRandomPassword();
 
         $userData = [
@@ -50,7 +68,6 @@ class AuthController extends BaseController
             'password' => password_hash($password, PASSWORD_DEFAULT),
         ];
 
-        // Load PHPMailer
         $mail = new PHPMailer(true);
 
         try {

@@ -25,7 +25,7 @@ $routes->group('review', static function ($routes) {
     // route = base_url/review
     $routes->get('/', 'ReviewController::index');
     // route = base_url/review/create
-    $routes->get('create', 'ReviewController::create');
+    $routes->post('create', 'ReviewController::create');
 });
 
 $routes->group('ride', static function ($routes) {

@@ -72,7 +72,6 @@
                             <h3 class="fw-bolder"><?php echo $ride['distance']; ?></h3>
                             <h6 class="mt-4">Total Amount</h6>
                             <h3 class="fw-bolder"><?php echo 'LKR ' . $ride['price'] . '.00'; ?></h3>
-                            
                         </div>
                         <form action="javascript:void(0)" id="payment_form">
                             <input type="text" class="form-control" name="booking_id" id="booking_id" value="<?php echo $booking['id']; ?>" placeholder="ride id" hidden>
@@ -111,7 +110,7 @@
                                 text: response.message
                             }).then((result) => {
                                 if (result.isConfirmed || result.isDismissed) {
-                                    window.location.href = '<?php echo base_url(); ?>review';
+                                  window.location.href = '<?php echo base_url(); ?>review?ride=' + response.ride_id;
                                 }
                             });
                         } else {
