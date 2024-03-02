@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\UserModel;
+use App\Models\VehicleModel;
 use Exception;
 use PHPMailer\PHPMailer\PHPMailer;
 
@@ -18,6 +19,19 @@ class AuthController extends BaseController
         return view('pages/signup');
     }
 
+    public function profile()
+    {
+        $userId = session()->get('user_id');
+
+        $userModel = new UserModel();
+        $user = $userModel->find($userId);
+
+        $vehicleModel = new VehicleModel();
+        $vehicle = $vehicleModel->where('user_id', $userId)->first();
+
+        return view('pages/profile', ['user' => $user, 'vehicle' => $vehicle]);
+    }
+
     public function register()
     {
         $password = $this->generateRandomPassword();
@@ -28,7 +42,7 @@ class AuthController extends BaseController
             'email' => $this->request->getPost('email'),
             'phone' => $this->request->getPost('phone'),
             'nic' => $this->request->getPost('nic'),
-            'is_driver' => $this->request->getPost('is_driver') ? 1 : 0,
+            'is_driver' => $this->request->getPost('is_driver'),
             'username' => $this->request->getPost('email'),
             'password' => password_hash($password, PASSWORD_DEFAULT),
         ];
@@ -106,7 +120,8 @@ class AuthController extends BaseController
         $session = session();
         $session->set('user_id', $user['id']);
         $session->set('email', $user['email']);
-        $session->set('role', $role); 
+        $session->set('name', $user['name']);
+        $session->set('role', $role);
 
         return $this->response->setJSON(['success' => true, 'message' => 'Login successful']);
     }
@@ -116,5 +131,87 @@ class AuthController extends BaseController
         $session = session();
         $session->destroy();
         return $this->response->setJSON(['success' => true, 'message' => 'Login successful']);
+    }
+
+    public function update_profile()
+    {
+        $userId = session()->get('user_id');
+        $userModel = new UserModel();
+
+        $userData = [
+            'name' => $this->request->getPost('name'),
+            'address' => $this->request->getPost('address'),
+            'email' => $this->request->getPost('email'),
+            'phone' => $this->request->getPost('phone'),
+            'nic' => $this->request->getPost('nic'),
+            'username' => $this->request->getPost('uname'),
+        ];
+
+        $password = $this->request->getPost('password');
+        if (!empty($password)) {
+            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+            $userData['password'] = $hashedPassword;
+        }
+
+        $userModel->update($userId, $userData);
+
+        return $this->response->setJSON(['success' => true]);
+    }
+
+    public function register_vehicle()
+    {
+        $vehicleModel = new VehicleModel();
+        $userId = session()->get('user_id');
+        $licensePlate = $this->request->getPost('license_plate');
+
+        $existingVehicle = $vehicleModel->where('license_plate', $licensePlate)->first();
+
+        if ($existingVehicle) {
+            return $this->response->setJSON(['success' => false, 'message' => 'License plate already exists in the database.']);
+        }
+
+        $vehicleData = [
+            'user_id' => $userId,
+            'vehicle_model' => $this->request->getPost('vehicle_model'),
+            'vehicle_year' => $this->request->getPost('vehicle_year'),
+            'license_plate' => $this->request->getPost('license_plate'),
+            'vehicle_color' => $this->request->getPost('vehicle_color'),
+            'insurance_company' => $this->request->getPost('insurance_company'),
+            'policy_number' => $this->request->getPost('policy_number'),
+            'expiration_date' => $this->request->getPost('expiration_date'),
+        ];
+
+        if ($vehicleModel->insert($vehicleData)) {
+            $validationResult['success'] = true;
+            return $this->response->setJSON($validationResult);
+        }
+    }
+
+    public function update_vehicle()
+    {
+        $vehicleModel = new VehicleModel();
+        $licensePlate = $this->request->getPost('license_plate');
+
+        $existingVehicle = $vehicleModel->where('license_plate', $licensePlate)->first();
+
+        if (!$existingVehicle) {
+            return $this->response->setJSON(['success' => false, 'message' => 'Vehicle not found.']);
+        }
+        $vehicleId = $existingVehicle['id'];
+
+        $updateData = [
+            'vehicle_model' => $this->request->getPost('vehicle_model'),
+            'vehicle_year' => $this->request->getPost('vehicle_year'),
+            'vehicle_color' => $this->request->getPost('vehicle_color'),
+            'insurance_company' => $this->request->getPost('insurance_company'),
+            'policy_number' => $this->request->getPost('policy_number'),
+            'expiration_date' => $this->request->getPost('expiration_date'),
+        ];
+
+        if ($vehicleModel->update($vehicleId, $updateData)) {
+            return $this->response->setJSON(['success' => true, 'message' => 'Vehicle data updated successfully.']);
+        } else {
+            return $this->response->setJSON(['success' => false, 'message' => 'Failed to update vehicle data.']);
+        }
     }
 }

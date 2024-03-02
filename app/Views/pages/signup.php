@@ -66,7 +66,7 @@
             var email = $('#email').val();
             var phone = $('#phone').val();
             var nic = $('#nic').val();
-            var isDriver = $('#flexCheckDefault').is(':checked');
+            var isDriver = $('#flexCheckDefault').is(':checked') ? 1 : 0;
 
             $.ajax({
                 url: '<?= base_url(); ?>auth/register',

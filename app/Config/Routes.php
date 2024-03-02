@@ -15,6 +15,10 @@ $routes->group('auth', static function ($routes) {
     $routes->post('register', 'AuthController::register');
     $routes->post('login', 'AuthController::login');
     $routes->get('logout', 'AuthController::logout');
+    $routes->get('profile', 'AuthController::profile');
+    $routes->post('update_profile', 'AuthController::update_profile');
+    $routes->post('register_vehicle', 'AuthController::register_vehicle');
+    $routes->post('update_vehicle', 'AuthController::update_vehicle');
 });
 
 $routes->group('review', static function ($routes) {

@@ -37,14 +37,19 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#">Link</a>
                     </li>
-
                     <li class="nav-item">
-                        <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+                        <a class="nav-link" href="<?php echo base_url(); ?>auth/profile">Profile</a>
                     </li>
                 </ul>
                 <div class="d-flex">
-                    <button class="btn" id="btn_logout"><i class="fa-solid fa-right-from-bracket fs-4"></i></button>
+                    <?php if (session()->get('user_id')) : ?>
+                        <span class="email mt-1">Hi!&nbsp;<?php echo session()->get('name'); ?></span>
+                        <button type="button" class="btn" id="btn_logout" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Logout"><i class="fa-solid fa-right-from-bracket fs-5"></i></button>
+                    <?php else : ?>
+                        <a href="<?php echo base_url('auth/signin'); ?>" class="btn">Sign In</a>
+                    <?php endif; ?>
                 </div>
+
             </div>
         </div>
     </nav>
