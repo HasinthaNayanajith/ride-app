@@ -32,6 +32,8 @@ $routes->group('ride', static function ($routes) {
     // route = base_url/ride
     $routes->get('/', 'RideController::index');
     $routes->get('available', 'RideController::available');
+    $routes->post('book', 'RideController::bookRide');
+    $routes->get('view', 'RideController::viewRide');
 });
 
 $routes->group('payment', static function ($routes) {

@@ -50,9 +50,6 @@ class AuthController extends BaseController
             'password' => password_hash($password, PASSWORD_DEFAULT),
         ];
 
-        $userModel = new UserModel();
-        $userModel->insert($userData);
-
         // Load PHPMailer
         $mail = new PHPMailer(true);
 
@@ -77,6 +74,8 @@ class AuthController extends BaseController
             $mail->AltBody = 'Thank you for registering with us. Your username is: ' . $userData['email'] . ' and your password is: ' . $password;
 
             if ($mail->send()) {
+                $userModel = new UserModel();
+                $userModel->insert($userData);
                 $response = ['success' => true];
             } else {
                 $response = ['success' => false];
@@ -100,7 +99,7 @@ class AuthController extends BaseController
     public function login()
     {
         $email = $this->request->getPost('email');
-        $password = $this->request->getPost('password');
+        $password = $this->request->getVar('password');
 
         $userModel = new UserModel();
         $user = $userModel->getUserByEmail($email);
@@ -150,7 +149,7 @@ class AuthController extends BaseController
             'username' => $this->request->getPost('uname'),
         ];
 
-        $password = $this->request->getPost('password');
+        $password = $this->request->getVar('password');
         if (!empty($password)) {
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
             $userData['password'] = $hashedPassword;

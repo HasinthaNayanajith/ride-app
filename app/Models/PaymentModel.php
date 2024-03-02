@@ -8,6 +8,6 @@ class PaymentModel extends Model
 {
     protected $table = 'payments'; 
     protected $primaryKey = 'id'; 
-    protected $allowedFields = ['id', 'ride_id', 'passenger_id', 'driver_id', 'amount', 'payment_date']; 
+    protected $allowedFields = ['id', 'ride_id', 'amount', 'payment_date']; 
 }
 

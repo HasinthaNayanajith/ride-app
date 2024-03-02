@@ -68,19 +68,21 @@
                                     <label for="exampleFormControlInput1" class="form-label">Pick Up Location</label>
                                     <div class="input-group mb-3">
                                         <input type="text" class="form-control text-dark fw-bold" id="pick_location" name="pick_location" placeholder="Search">
-                                        <button class="btn btn-outline-secondary" type="button" id="locate-me"><i class="bi bi-geo-alt-fill"></i></button>
+                                        <button class="btn btn-dark" type="button" id="locate-me"><i class="bi bi-geo-alt-fill"></i></button>
                                     </div>
+                                    <input type="text" name="pl_hidden" id="pl_hidden" hidden>
                                     <input type="hidden" id="pick_lat">
                                     <input type="hidden" id="pick_long">
                                 </div>
                                 <div class="mb-3">
                                     <label for="exampleFormControlInput1" class="form-label">Drop Off Location</label>
                                     <input id="drop_location" name="drop_location" type="text" class="form-control text-dark fw-bold" placeholder="Search">
+                                    <input type="text" name="dl_hidden" id="dl_hidden" hidden>
                                     <input type="hidden" id="drop_lat">
                                     <input type="hidden" id="drop_long">
                                 </div>
                             </div>
-                            <div class="alert alert-secondary" role="alert">
+                            <div class="alert alert-info" role="alert">
                                 <div class="d-flex flex-column">
                                     <span class="fw-bold text-dark">Distance</span>
                                     <span id="distance">---</span>
@@ -90,170 +92,34 @@
                             </div>
                             <div id="map" class="rounded" style="height: 400px; width: 100%;"></div>
                             <div class="float-end">
-                                <button class="btn btn-primary mt-3 srch">See Available Drivers & Prices</button>
+                                <?php if ($logged_in) { ?>
+                                    <button class="btn btn-dark mt-3 p-3 px-4" id="findTaxi" disabled>Find a Taxi</button>
+                                    <button class="btn btn-primary mt-3 p-3 px-4" id="login" hidden>Login & Find a Taxi</button>
+                                <?php } else { ?>
+                                    <button class="btn btn-dark mt-3 p-3 px-4" id="findTaxi" hidden>Find a Taxi</button>
+                                    <button class="btn btn-primary mt-3 p-3 px-4" id="login">Login & Find a Taxi</button>
+                                <?php } ?>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-md-7 col-sm-12 d-flex justify-content-center">
-                <img src="/images/ride.webp" alt="Rating Img" width="50%" class="">
+                <img src="/images/ride.webp" alt="Rating Img" width="400px" height="400px" class="">
             </div>
         </div>
     </div>
     <?php echo view('layouts/footer'); ?>
-    <script type="module">
-        // // Initialize and add the map
-        // let map;
-
-
-        // async function initMap() {
-        //     // Request needed libraries.
-        //     //@ts-ignore
-        //     const {
-        //         Map
-        //     } = await google.maps.importLibrary("maps");
-        //     const {
-        //         AdvancedMarkerElement
-        //     } = await google.maps.importLibrary("marker");
-
-        //     // Try to get the user's current location
-        //     navigator.geolocation.getCurrentPosition(
-        //         (position) => {
-        //             // The location of the user
-        //             const userPosition = {
-        //                 lat: position.coords.latitude,
-        //                 lng: position.coords.longitude,
-        //             };
-
-        //             getAddressFromLatLng(userPosition.lat, userPosition.lng);
-        //             console.log("User's location: ", userPosition);
-
-        //             // The map, centered at the user's location
-        //             map = new Map(document.getElementById("map"), {
-        //                 zoom: 14,
-        //                 center: userPosition,
-        //                 mapId: "DEMO_MAP_ID",
-        //             });
-
-        //             // The marker, positioned at the user's location
-        //             const marker = new AdvancedMarkerElement({
-        //                 map: map,
-        //                 position: userPosition,
-        //                 title: "Your Location",
-        //             });
-        //         },
-        //         () => {
-        //             // Handle errors or default to a specific location
-        //             console.error(
-        //                 "Error getting user location. Defaulting to Kurunegala, Sri Lanka."
-        //             );
-
-        //             // The location of Kurunegala, Sri Lanka
-        //             const defaultPosition = {
-        //                 lat: 7.4712,
-        //                 lng: 80.3548
-        //             };
-
-        //             // The map, centered at Kurunegala, Sri Lanka
-        //             map = new Map(document.getElementById("map"), {
-        //                 zoom: 14,
-        //                 center: defaultPosition,
-        //                 mapId: "DEMO_MAP_ID",
-        //             });
-
-        //             // The marker, positioned at Kurunegala, Sri Lanka
-        //             const marker = new AdvancedMarkerElement({
-        //                 map: map,
-        //                 position: defaultPosition,
-        //                 title: "Kurunegala, Sri Lanka",
-        //             });
-        //         }
-        //     );
-        // }
-
-
-
-        // Set up Places Autocomplete for the locationInput field
-        // const locationInput = document.getElementById("locationInput");
-        // const autocomplete = new google.maps.places.Autocomplete(locationInput);
-        // autocomplete.bindTo("bounds", map);
-
-        // // Optionally, you can add an event listener to handle the Enter key
-        // locationInput.addEventListener("keydown", (event) => {
-        //     if (event.key === "Enter") {
-        //         event.preventDefault();
-        //         searchLocation();
-        //     }
-        // });
-
-        // initMap();
-
-        // function getAddressFromLatLng(lat, lng) {
-        //     const geocoder = new google.maps.Geocoder();
-
-        //     const latlng = {
-        //         lat: parseFloat(lat),
-        //         lng: parseFloat(lng)
-        //     };
-
-        //     geocoder.geocode({
-        //         location: latlng
-        //     }, (results, status) => {
-        //         if (status === "OK") {
-        //             if (results) {
-        //                 const address = results[0].formatted_address;
-        //                 console.log("Address:", address);
-
-        //                 // You can use the obtained address in your application as needed
-        //             } else {
-        //                 console.error("No results found");
-        //             }
-        //         } else {
-        //             console.error("Geocoder failed due to:", status);
-        //         }
-        //     });
-        // }
-
-        // // Function to search for a location using Places Autocomplete
-        // function searchLocation() {
-        //     console.log("Searching for location...");
-        //     const locationInput = document.getElementById("locationInput");
-        //     const locationName = locationInput.value;
-
-        //     if (locationName.trim() === "") {
-        //         alert("Please enter a location name");
-        //         return;
-        //     }
-
-        //     const geocoder = new google.maps.Geocoder();
-
-        //     // Use Places Autocomplete to get location details
-        //     const placesService = new google.maps.places.PlacesService(map);
-
-        //     placesService.findPlaceFromQuery({
-        //             query: locationName,
-        //             fields: ["geometry"]
-        //         },
-        //         (results, status) => {
-        //             if (status === "OK" && results && results.length > 0) {
-        //                 const location = results[0].geometry.location;
-        //                 map.setCenter(location);
-
-        //                 // Optionally, you can add a marker for the searched location
-        //                 const marker = new google.maps.Marker({
-        //                     map: map,
-        //                     position: location,
-        //                     title: locationName,
-        //                 });
-        //             } else {
-        //                 alert("Location not found. Please enter a valid location name.");
-        //             }
-        //         }
-        //     );
-        // }
-    </script>
     <script>
+        var pl = null;
+        var dl = null;
+        var plt = 0;
+        var dlt = 0;
+        var plg = 0;
+        var dlg = 0;
+        var dist = 0;
+        var prc = 0;
+
         function getAddressFromLatLng(lat, lng, elementId) {
             const geocoder = new google.maps.Geocoder();
 
@@ -271,7 +137,7 @@
                         console.log("Address:", address);
 
                         document.getElementById(elementId).value = address;
-                        // You can use the obtained address in your application as needed
+                        pl = address;
                     } else {
                         console.error("No results found");
                     }
@@ -325,11 +191,33 @@
                         } else {
                             price = (5 * 100) + (5 * 80) + ((distanceInKMs - 10) * 60);
                         }
-                        document.getElementById('price').innerText = 'LKR ' + price.toFixed(2) + ' + Service Charge';
-                    }
-                    else{
+                        document.getElementById('price').innerText = 'LKR ' + price.toFixed(2);
+
+                        dist = distance;
+                        prc = price;
+                        plt = pickupLat;
+                        dlt = dropoffLat;
+                        plg = pickupLng;
+                        dlg = dropoffLng;
+                        // set the pickup and dropoff locations
+                        pl = document.getElementById('pl_hidden').value;
+                        dl = document.getElementById('dl_hidden').value;
+                        // enable the find taxi button
+                        document.getElementById('findTaxi').disabled = false;
+                    } else {
                         document.getElementById('distance').innerText = '---';
                         document.getElementById('price').innerText = '---';
+
+                        dist = 0;
+                        prc = 0;
+                        plt = 0;
+                        dlt = 0;
+                        plg = 0;
+                        dlg = 0;
+                        pl = '';
+                        dl = '';
+                        // disable the find taxi button
+                        document.getElementById('findTaxi').disabled = true;
                     }
 
                     // Display the route on the map
@@ -343,7 +231,6 @@
                     });
                     polyline.setMap(map);
 
-                    // Display the distance on your page as needed
                     // document.getElementById('distance').innerText = distance;
                 } else {
                     console.error('Error:', status);
@@ -415,6 +302,9 @@
                 const dropoffLat = parseFloat(place.geometry.location.lat());
                 const dropoffLng = parseFloat(place.geometry.location.lng());
 
+                // set pl_hidden and dl_hidden
+                document.getElementById('pl_hidden').value = document.getElementById('pick_location').value;
+                document.getElementById('dl_hidden').value = place.formatted_address;
                 calculateDistanceAndRoute(pickupLat, pickupLng, dropoffLat, dropoffLng);
             });
 
@@ -426,6 +316,24 @@
                 document.getElementById('pick_long').value = place2.geometry.location.lng();
             });
         }
+
+        // find taxi button click event
+        $('#findTaxi').click(function() {
+            if (plt == 0 || dlt == 0 || plg == 0 || dlg == 0 || dist == 0 || prc == 0 || pl == '' || dl == '') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong! Please select pickup and dropoff locations!',
+                });
+            } else {
+                window.location.href = '<?= base_url(); ?>ride/available?pl=' + pl + '&dl=' + dl + '&plt=' + plt + '&dlt=' + dlt + '&plg=' + plg + '&dlg=' + dlg + '&dist=' + dist + '&prc=' + prc;
+            }
+        });
+
+        // #login button click event
+        $('#login').click(function() {
+            window.location.href = '<?= base_url(); ?>auth/signin';
+        });
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAF6DmICYAwskmjHJVMC_2LzCSnsgnogwg&loading=async&libraries=places&callback=myMap"></script>
 </body>
