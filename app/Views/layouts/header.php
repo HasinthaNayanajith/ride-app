@@ -172,7 +172,7 @@
                 </ul>
                 <div>
                     <?php if (session()->get('user_id')) : ?>
-                        <a href="<?php echo base_url(); ?>auth/profile"><span class="email mt-1">Hi!&nbsp;<?php echo session()->get('name'); ?></span></a>
+                        <a href="<?php echo base_url(); ?>auth/profile"><span class="email mt-1 " style="color: #EF5241;">Hi!&nbsp;<?php echo session()->get('name'); ?></span></a>
                         <button type="button" class="btn" id="btn_logout" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Logout"><i class="fa-solid fa-right-from-bracket fs-5"></i></button>
                     <?php else : ?>
                         <a href="<?php echo base_url('auth/signin'); ?>" class="btn">Sign In</a>

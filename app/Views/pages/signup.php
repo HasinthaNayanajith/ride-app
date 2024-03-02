@@ -40,10 +40,10 @@
                                 </label>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary w-100 mt-3" id="btn_signup">Signup</button>
+                        <button type="submit" class="btn w-100 mt-3 text-white" id="btn_signup" style="background-color: #EF5241;">Signup</button>
                     </form>
                     <div class="text-center mt-3">
-                        <span>Have an Account? <a href="<?= base_url('auth/signin'); ?>">Sign In</a></span>
+                        <span>Have an Account? <a href="<?= base_url('auth/signin'); ?>" style="color: #EF5241;">Sign In</a></span>
                     </div>
                 </div>
             </div>
@@ -57,8 +57,7 @@
     $(document).ready(function() {
         $('#signupForm').submit(function(e) {
             $("#btn_signup").prop('disabled', true);
-            $("#btn_signup").text('Signing Up...');
-
+            $('#btn_signup').prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Signing In...');
             e.preventDefault();
 
             var name = $('#name').val();

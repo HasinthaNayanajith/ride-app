@@ -23,10 +23,10 @@
                             <h2 class="mt-3"><?php echo $user['name']; ?></h2>
                             <h5 class="fst-italic"><?php echo $user['is_driver'] == 1 ? 'Driver' : 'Passenger'; ?></h5>
                             <div class="social-links mt-2">
-                                <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-                                <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-                                <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-                                <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+                                <a href="#" class="twitter" style="color: #EF5241;"><i class="bi bi-twitter"></i></a>
+                                <a href="#" class="facebook" style="color: #EF5241;"><i class="bi bi-facebook"></i></a>
+                                <a href="#" class="instagram" style="color: #EF5241;"><i class="bi bi-instagram"></i></a>
+                                <a href="#" class="linkedin" style="color: #EF5241;"><i class="bi bi-linkedin"></i></a>
                             </div>
                         </div>
                     </div>
@@ -37,20 +37,20 @@
                         <div class="card-body pt-3">
                             <ul class="nav nav-tabs nav-tabs-bordered">
                                 <li class="nav-item">
-                                    <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Overview</button>
+                                    <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview" style="color: #EF5241;">Overview</button>
                                 </li>
 
                                 <li class="nav-item">
-                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Edit Profile</button>
+                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit" style="color: #EF5241;">Edit Profile</button>
                                 </li>
                                 <?php if ($user['is_driver'] == 1) : ?>
                                     <li class="nav-item">
-                                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-settings">Vehicle Settings</button>
+                                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-settings" style="color: #EF5241;">Vehicle Settings</button>
                                     </li>
                                 <?php endif; ?>
                                 <?php if ($user['is_driver'] == 0) : ?>
                                     <li class="nav-item">
-                                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#rides">Your Rides</button>
+                                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#rides" style="color: #EF5241;">Your Rides</button>
                                     </li>
                                 <?php endif; ?>
                             </ul>
@@ -145,7 +145,7 @@
                                         </div>
 
                                         <div class="text-end">
-                                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                                            <button type="submit" class="btn text-white" style="background-color: #EF5241;">Save Changes</button>
                                         </div>
                                     </form>
                                 </div>
@@ -218,7 +218,7 @@
                                             </div>
 
                                             <div class="text-end">
-                                                <button type="submit" class="btn btn-primary">Update Details</button>
+                                                <button type="submit" class="btn text-white" style="background-color: #EF5241;">Update Details</button>
                                             </div>
                                         </form>
                                     <?php } ?>

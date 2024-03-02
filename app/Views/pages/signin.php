@@ -27,10 +27,10 @@
                                 <input type="password" class="form-control" id="password" name="password" required>
                             </div>
                         </div>
-                        <button class="btn btn-primary w-100 mt-3" id="btn_signin">Sign Me In</button>
+                        <button class="btn w-100 mt-3 text-white" style="background-color: #EF5241;" id="btn_signin">Sign In</button> 
                     </form>
                     <div class="text-center mt-3">
-                        <span>Dont have an Account? <a href="<?= base_url('auth/signup'); ?>">Sign Up</a></span>
+                        <span>Dont have an Account? <a href="<?= base_url('auth/signup'); ?>" style="color: #EF5241;">Sign Up</a></span>
                     </div>
                 </div>
             </div>
@@ -46,7 +46,7 @@
         $('#signinForm').submit(function(e) {
             e.preventDefault();
 
-            $('#btn_signin').prop('disabled', true).html('Signing In... <i class="fas fa-spinner fa-spin"></i>');
+            $('#btn_signin').prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Signing In...');
 
             var email = $('#email').val();
             var password = $('#password').val();
