@@ -37,6 +37,5 @@ $routes->group('ride', static function ($routes) {
 $routes->group('payment', static function ($routes) {
     // route = base_url/payment
     $routes->get('/', 'PaymentController::index');
-    // route = base_url/review/create
-    // $routes->get('create', 'ReviewController::create');
+    $routes->post('create', 'PaymentController::create');
 });
