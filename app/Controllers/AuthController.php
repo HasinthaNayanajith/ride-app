@@ -22,6 +22,9 @@ class AuthController extends BaseController
     public function profile()
     {
         $userId = session()->get('user_id');
+        if (!session()->has('user_id')) {
+            return redirect()->to('auth/signin')->with('error', 'Access denied. Please log in.');
+        }
 
         $userModel = new UserModel();
         $user = $userModel->find($userId);
