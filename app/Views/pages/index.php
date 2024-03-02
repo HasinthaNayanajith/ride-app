@@ -116,7 +116,7 @@
 
     <nav class="navbar navbar-light fixed-top bg-white navbar-expand-lg">
         <div class="container">
-            <a class="navbar-brand" href="index.html">
+            <a class="navbar-brand" href="<?php echo base_url(); ?>">
                 <img src="images/logo.svg" width="120" alt="CityTaXi.COM Logo">
             </a>
             <button class="navbar-toggler border-0" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
