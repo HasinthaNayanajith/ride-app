@@ -72,7 +72,6 @@
                             <h5>3.7Km</h5>
                             <h2 class="mt-4">Total Amount</h2>
                             <h4>LKR 617.98</h4>
-                            
                         </div>
                         <form action="javascript:void(0)" id="payment_form">
                             <input type="text" class="form-control" name="ride_id" id="ride_id" placeholder="ride id" hidden>
@@ -113,7 +112,7 @@
                                 text: response.message
                             }).then((result) => {
                                 if (result.isConfirmed || result.isDismissed) {
-                                    window.location.href = '<?php echo base_url(); ?>review/create';
+                                    window.location.href = '<?php echo base_url(); ?>review?ride=' + response.ride_id;
                                 }
                             });
                         } else {

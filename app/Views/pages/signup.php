@@ -94,8 +94,8 @@
                     } else {
                         Swal.fire({
                             icon: 'error',
-                            title: 'Registration failed',
-                            text: 'Please try again.'
+                            title: "Ooops...",
+                            text: response.message
                         });
                     }
                 },
