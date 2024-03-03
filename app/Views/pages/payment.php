@@ -110,7 +110,7 @@
                                 text: response.message
                             }).then((result) => {
                                 if (result.isConfirmed || result.isDismissed) {
-                                //   window.location.href = '<?php echo base_url(); ?>review?ride=' + response.ride_id;
+                                  window.location.href = '<?php echo base_url(); ?>review?ride=' + response.ride_id;
                                 }
                             });
                         } else {

@@ -27,7 +27,7 @@
                                 <input type="password" class="form-control" id="password" name="password" required>
                             </div>
                         </div>
-                        <button class="btn w-100 mt-3 text-white" style="background-color: #EF5241;" id="btn_signin">Sign In</button> 
+                        <button class="btn w-100 mt-3 text-white" style="background-color: #EF5241;" id="btn_signin">Sign In</button>
                     </form>
                     <div class="text-center mt-3">
                         <span>Dont have an Account? <a href="<?= base_url('auth/signup'); ?>" style="color: #EF5241;">Sign Up</a></span>
@@ -63,11 +63,15 @@
                         Swal.fire({
                             icon: 'success',
                             text: 'Login successful!',
-                            showConfirmButton: false, 
+                            showConfirmButton: false,
                             timer: 1000
                         });
                         setTimeout(function() {
-                            window.location.href = '<?php echo base_url(); ?>';
+                            if (response.userId == 1) {
+                                window.location.href = '<?= base_url('call_center'); ?>';
+                            } else {
+                                window.location.href = '<?php echo base_url(); ?>';
+                            }
                         }, 1000);
                     } else {
                         Swal.fire({

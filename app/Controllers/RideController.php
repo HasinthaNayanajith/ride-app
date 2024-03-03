@@ -41,10 +41,13 @@ class RideController extends BaseController
     public function bookRide()
     {
         try {
-            $passenger_id = session()->get('user_id');
+            $passenger_id = $this->request->getVar('passenger_id');
             // if session is not set, return error
             if (!$passenger_id) {
-                return $this->response->setJSON(['success' => false, 'message' => 'You are not logged in. Please login to continue.']);
+                $passenger_id = session()->get('user_id');
+                if (!$passenger_id) {
+                    return $this->response->setJSON(['success' => false, 'message' => 'You are not logged in. Please login to continue.']);
+                }
             }
             $pickup_location = $this->request->getVar('pickup_location');
             $drop_location = $this->request->getVar('drop_location');
@@ -54,6 +57,7 @@ class RideController extends BaseController
             $drop_longitude = $this->request->getVar('drop_longitude');
             $distance = $this->request->getVar('distance');
             $price = $this->request->getVar('price');
+            $is_call_center = $this->request->getVar('is_call_center');
 
             $ridesModel = new \App\Models\RidesModel();
             $rideId = $ridesModel->insert([
@@ -75,7 +79,12 @@ class RideController extends BaseController
                 'vehicle_id' => $this->request->getVar('vehicle_id'),
                 'status' => 0,
                 'started_at' => date('Y-m-d H:i:s'),
+                'is_call_center' => $is_call_center
             ], true);
+
+            // update driver availability
+            $userModel = new \App\Models\UserModel();
+            $userModel->update($this->request->getVar('driver_id'), ['is_available' => 0]);
 
             return $this->response->setJSON(['success' => true, 'message' => 'Ride booked successfully!', 'booking_id' => $bookingId]);
         } catch (Exception $e) {
@@ -83,7 +92,8 @@ class RideController extends BaseController
         }
     }
 
-    public function viewRide(){
+    public function viewRide()
+    {
 
         $booking_id = $this->request->getGet('bookingId');
         $passenger_id = session()->get('user_id');
@@ -94,7 +104,7 @@ class RideController extends BaseController
 
         $booking = $bookingModel->find($booking_id);
 
-        if(!$booking || $booking['passenger_id'] != $passenger_id){
+        if (!$booking || $booking['passenger_id'] != $passenger_id) {
             return redirect()->to('ride');
         }
 
@@ -108,7 +118,6 @@ class RideController extends BaseController
         $data['vehicle'] = $vehicle;
 
         return view('pages/view_ride', $data);
-    
     }
 }
 

@@ -120,8 +120,8 @@ class AuthController extends BaseController
 
             if ($mail->send()) {
                 $userModel = new UserModel();
-                $userModel->insert($userData);
-                $response = ['success' => true];
+                $userId = $userModel->insert($userData, true);
+                $response = ['success' => true, 'userId' => $userId];
             } else {
                 $response = ['success' => false];
             }
@@ -170,7 +170,7 @@ class AuthController extends BaseController
         $session->set('name', $user['name']);
         $session->set('role', $role);
 
-        return $this->response->setJSON(['success' => true, 'message' => 'Login successful']);
+        return $this->response->setJSON(['success' => true, 'message' => 'Login successful', 'userId' => $user['id']]);
     }
 
     public function logout()
