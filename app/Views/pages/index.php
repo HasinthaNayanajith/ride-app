@@ -34,7 +34,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com/">
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;700&amp;display=swap" rel="stylesheet">
-    <title>CityTaXi.COM</title>
+    <title>CityTaxi</title>
     <meta name="description" content="You can go anywehere you want at anytime with CityTaXi.COM. Book a TukTuk, Budget Cars, SUVs & Vans.">
     <meta name="author" content="deltadevelops.xyz">
     <meta name="theme-color" content="#FDB940" />
@@ -116,7 +116,7 @@
 
     <nav class="navbar navbar-light fixed-top bg-white navbar-expand-lg">
         <div class="container">
-            <a class="navbar-brand" href="index.html">
+            <a class="navbar-brand" href="<?php echo base_url(); ?>">
                 <img src="images/logo.svg" width="120" alt="CityTaXi.COM Logo">
             </a>
             <button class="navbar-toggler border-0" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -126,12 +126,9 @@
             <div class="collapse navbar-collapse d-flex justify-content-between text-center text-md-left" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto" id="home-page-menu">
                     <li class="nav-item">
-                        <a class="nav-link" href="#app">CityTaXi <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="#fleet">Our Fleet</a>
                     </li>
-                    
+
                     <li class="nav-item">
                         <a class="nav-link" href="#contact">Contact Us</a>
                     </li>
@@ -139,10 +136,14 @@
                     <li class="nav-item">
                         <a class="nav-link" href="<?php echo base_url(); ?>auth/profile">Profile</a>
                     </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?php echo base_url(); ?>ride">Book Now</a>
+                    </li>
                 </ul>
                 <div>
                     <?php if (session()->get('user_id')) : ?>
-                        <span class="email mt-1">Hi!&nbsp;<?php echo session()->get('name'); ?></span>
+                        <a href="<?php echo base_url(); ?>auth/profile"><span class="email mt-1">Hi!&nbsp;<?php echo session()->get('name'); ?></span></a>
                         <button type="button" class="btn" id="btn_logout" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Logout"><i class="fa-solid fa-right-from-bracket fs-5"></i></button>
                     <?php else : ?>
                         <a href="<?php echo base_url('auth/signin'); ?>" class="btn">Sign In</a>
@@ -156,15 +157,17 @@
     <div id="height-const">
         <div id="content">
 
-            <section class="home-section" id="home-banner">
+            <section class="home-section" id="home-banner" style="margin-top: -80px ;">
                 <div class="container">
                     <div class="row align-items-center">
                         <div class="col-md-7 mb-5 text-md-left text-center">
-                            <img src="resources/images/logo.svg" width="300" alt="CityTaXi.COM Logo">
-                            <h1 class="home-title text-tight"><span class="SF-thin">Welcome to </span><br /><strong>CityTaXi.COM</strong></h1>
-                            <h2 class="h3 text-tight">071-0810914</h2>
-                            <h3 class="h5 text-tight">The one you can always count on</h3>
+                            <!-- <img src="/images/logo.svg" width="300" alt="CityTaXi.COM Logo"> -->
+                            <h1 class="home-title text-tight"><span class="SF-thin">Discover </span><br /><strong>CityTaxi</strong></h1>
+                            <h2 class="h3 text-tight">Call Us at 011-9998881</h2>
+                            <h3 class="h5 text-tight">Your Reliable Transportation Solution</h3>
+                            <a href="<?php echo base_url(); ?>ride" type="button" class="btn btn-danger px-4 mt-2 rounded rounded-pill">Book Now&nbsp;<i class="fa-solid fa-arrow-right"></i></a>
                         </div>
+
 
                         <!-- ===== BOOKING PANEL =============================================================================== -->
                         <img src="/images/back.png" width="460">
@@ -485,7 +488,7 @@
             </div>
         </div>
 
-        <a href="https://wa.me/94729588588" title="whatsapp chat" rel="noreferrer" target="_blank"><img src="resources/images/whatsapp.webp" title="whatapp chat link" alt="whatsapp chat link" class="whatsapp-chat" /></a>
+        <!-- <a href="https://wa.me/94729588588" title="whatsapp chat" rel="noreferrer" target="_blank"><img src="resources/images/whatsapp.webp" title="whatapp chat link" alt="whatsapp chat link" class="whatsapp-chat" /></a> -->
 
         <script src="includes/js/bootstrap.bundle.min.js"></script>
         <!--<script src="js/datetimepicker.min.js"></script>-->

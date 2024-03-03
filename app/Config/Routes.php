@@ -41,3 +41,8 @@ $routes->group('payment', static function ($routes) {
     $routes->get('/', 'PaymentController::index');
     $routes->post('create', 'PaymentController::create');
 });
+
+$routes->group('call_center', static function ($routes) {
+    // route = base_url/call_center
+    $routes->get('/', 'CallCenterController::index');
+});

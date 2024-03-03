@@ -2,6 +2,10 @@
 
 namespace App\Controllers;
 
+use App\Models\BookingsModel;
+use App\Models\PaymentModel;
+use App\Models\ReviewModel;
+use App\Models\RidesModel;
 use App\Models\UserModel;
 use App\Models\VehicleModel;
 use Exception;
@@ -26,13 +30,37 @@ class AuthController extends BaseController
             return redirect()->to('auth/signin')->with('error', 'Access denied. Please log in.');
         }
 
+        $vehicleModel = new VehicleModel();
+        $vehicle = $vehicleModel->where('user_id', $userId)->first();
+        
         $userModel = new UserModel();
         $user = $userModel->find($userId);
 
-        $vehicleModel = new VehicleModel();
-        $vehicle = $vehicleModel->where('user_id', $userId)->first();
+        $bookingModel = new BookingsModel();
+        $bookings = $bookingModel->where('passenger_id', $userId)->orderBy('ride_id', 'DESC')->findAll();
 
-        return view('pages/profile', ['user' => $user, 'vehicle' => $vehicle]);
+        $rideHistory = [];
+
+        foreach ($bookings as $booking) {
+            $rideId = $booking['ride_id'];
+
+            $rideModel = new RidesModel();
+            $ride = $rideModel->find($rideId);
+
+            $paymentModel = new PaymentModel();
+            $payment = $paymentModel->where('ride_id', $rideId)->first();
+
+            $reviewModel = new ReviewModel();
+            $review = $reviewModel->where('ride_id', $rideId)->first();
+
+            $rideHistory[] = [
+                'ride' => $ride,
+                'payment' => $payment,
+                'review' => $review,
+                'booking_id' => $booking['id']
+            ];
+        }
+        return view('pages/profile', ['user' => $user, 'vehicle' => $vehicle, 'rideHistory' => $rideHistory]);
     }
 
     public function register()
@@ -92,8 +120,8 @@ class AuthController extends BaseController
 
             if ($mail->send()) {
                 $userModel = new UserModel();
-                $userModel->insert($userData);
-                $response = ['success' => true];
+                $userId = $userModel->insert($userData, true);
+                $response = ['success' => true, 'userId' => $userId];
             } else {
                 $response = ['success' => false];
             }
@@ -142,7 +170,7 @@ class AuthController extends BaseController
         $session->set('name', $user['name']);
         $session->set('role', $role);
 
-        return $this->response->setJSON(['success' => true, 'message' => 'Login successful']);
+        return $this->response->setJSON(['success' => true, 'message' => 'Login successful', 'userId' => $user['id']]);
     }
 
     public function logout()

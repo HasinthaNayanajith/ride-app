@@ -160,9 +160,6 @@
             <div class="collapse navbar-collapse d-flex justify-content-between text-center text-md-left" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto" id="home-page-menu">
                     <li class="nav-item">
-                        <a class="nav-link" href="#app">CityTaXi <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="#fleet">Our Fleet</a>
                     </li>
 
@@ -170,12 +167,12 @@
                         <a class="nav-link" href="#contact">Contact Us</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?php echo base_url(); ?>auth/profile">Profile</a>
+                        <a class="nav-link" href="<?php echo base_url(); ?>ride">Book Now</a>
                     </li>
                 </ul>
                 <div>
                     <?php if (session()->get('user_id')) : ?>
-                        <span class="email mt-1">Hi!&nbsp;<?php echo session()->get('name'); ?></span>
+                        <a href="<?php echo base_url(); ?>auth/profile"><span class="email mt-1 " style="color: #EF5241;">Hi!&nbsp;<?php echo session()->get('name'); ?></span></a>
                         <button type="button" class="btn" id="btn_logout" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Logout"><i class="fa-solid fa-right-from-bracket fs-5"></i></button>
                     <?php else : ?>
                         <a href="<?php echo base_url('auth/signin'); ?>" class="btn">Sign In</a>

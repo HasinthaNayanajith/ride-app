@@ -31,13 +31,23 @@ class PaymentController extends BaseController
             'payment_date' => date('Y-m-d H:i:s'),
         ];
 
+        $bookingModel = new \App\Models\BookingsModel();
+        // if booking status is not 0, return error
+        $booking = $bookingModel->find($paymentData['ride_id']);
+        if ($booking['status'] != 0) {
+            return $this->response->setJSON(['success' => false, 'message' => 'Booking already paid.']);
+        }
         $paymentModel = new PaymentModel();
-
         if ($paymentModel->insert($paymentData)) {
             // update booking status
             $bookingModel = new \App\Models\BookingsModel();
             $bookingModel->update($paymentData['ride_id'], ['status' => 1, 'completed_at' => date('Y-m-d H:i:s'), 'ride_id' => $this->request->getVar('booking_id')]);
-            return $this->response->setJSON(['success' => true, 'message' => 'Payment completed successfully.']);
+            // get driver id
+            $booking = $bookingModel->find($paymentData['ride_id']);
+            // update driver availability
+            $userModel = new \App\Models\UserModel();
+            $userModel->update($booking['driver_id'], ['is_available' => 1]);
+            return $this->response->setJSON(['success' => true, 'message' => 'Payment completed successfully.', 'ride_id' => $paymentData['ride_id']]);
         } else {
             return $this->response->setJSON(['success' => false, 'message' => 'Failed to create payment.']);
         }

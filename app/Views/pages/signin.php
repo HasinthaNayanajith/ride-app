@@ -12,25 +12,25 @@
             <div class="card mt-3">
                 <div class="card-body p-4">
                     <div class="text-center">
-                        <h5 class="card-title fw-bolder font-playfair text-dark" style="font-size: 48px;">Sign In</h5>
-                        <p class="card-text">First thing is first. Please log into continue.</p>
+                        <h5 class="card-title fw-bolder font-playfair text-dark" style="font-size: 35px;">Sign In</h5>
+                        <p class="card-text fs-6">First thing is first. Please log into continue.</p>
                     </div>
                     <hr>
                     <form action="javascript:void(0)" id="signinForm">
                         <div class="my-3">
                             <div class="mb-3">
                                 <label for="exampleFormControlInput1" class="form-label">Email address</label>
-                                <input type="text" class="form-control" id="email" name="email" placeholder="">
+                                <input type="text" class="form-control" id="email" name="email" placeholder="" required>
                             </div>
                             <div class="mb-3">
                                 <label for="exampleFormControlInput1" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="password" name="password">
+                                <input type="password" class="form-control" id="password" name="password" required>
                             </div>
                         </div>
-                        <button class="btn btn-primary w-100 mt-3" id="btn_signin">Sign Me In</button>
+                        <button class="btn w-100 mt-3 text-white" style="background-color: #EF5241;" id="btn_signin">Sign In</button>
                     </form>
                     <div class="text-center mt-3">
-                        <span>Dont have an Account? <a href="<?= base_url('auth/signup'); ?>">Sign Up</a></span>
+                        <span>Dont have an Account? <a href="<?= base_url('auth/signup'); ?>" style="color: #EF5241;">Sign Up</a></span>
                     </div>
                 </div>
             </div>
@@ -46,7 +46,7 @@
         $('#signinForm').submit(function(e) {
             e.preventDefault();
 
-            $('#btn_signin').prop('disabled', true).html('Signing In... <i class="fas fa-spinner fa-spin"></i>');
+            $('#btn_signin').prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Signing In...');
 
             var email = $('#email').val();
             var password = $('#password').val();
@@ -63,11 +63,15 @@
                         Swal.fire({
                             icon: 'success',
                             text: 'Login successful!',
-                            showConfirmButton: false, 
+                            showConfirmButton: false,
                             timer: 1000
                         });
                         setTimeout(function() {
-                            window.location.href = '<?php echo base_url(); ?>';
+                            if (response.userId == 1) {
+                                window.location.href = '<?= base_url('call_center'); ?>';
+                            } else {
+                                window.location.href = '<?php echo base_url(); ?>';
+                            }
                         }, 1000);
                     } else {
                         Swal.fire({
